@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExcelQuest - Aprende Excel y Finanzas Jugando</title>
+    <!-- Tailwind CSS para diseño premium ultra-responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Paleta de Colores de Duolingo en tonos de Azul */
+        :root {
+            --duo-blue-dark: #0079C1;
+            --duo-blue-sky: #1CB0F6;
+            --duo-blue-light: #E1F5FE;
+            --duo-green: #58CC02;
+            --duo-green-dark: #46A302;
+            --duo-orange: #FF9600;
+            --duo-gray-text: #3C3C3C;
+        }
+
+        /* Estilos de botones 3D estilo Duolingo */
+        .btn-3d {
+            position: relative;
+            transition: all 0.1s ease;
+            border-bottom-width: 4px;
+        }
+        .btn-3d:active {
+            transform: translateY(4px);
+            border-bottom-width: 0px;
+        }
+
+        /* Animación de la Mascota */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes wingWave {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(15deg); }
+        }
+        .animate-wing {
+            transform-origin: 20px 50px;
+            animation: wingWave 2s ease-in-out infinite;
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Custom scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-[#F7F9FA] text-[#3C3C3C] font-sans antialiased selection:bg-sky-200">
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Encabezado Estilo Duolingo -->
+    <header class="sticky top-0 bg-white border-b-2 border-gray-200 z-50 transition-all">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2">
+                <div class="w-10 h-10 bg-[#1CB0F6] rounded-xl flex items-center justify-center shadow-md">
+                    <!-- Mini Icono de ExcelQuest -->
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </div>
+                <span class="text-2xl font-black tracking-tight text-[#1CB0F6]">Excel<span class="text-[#0079C1]">Quest</span></span>
+            </a>
+
+            <!-- Streak Tracker Falso para Gamificación -->
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-1 bg-orange-50 px-3 py-1.5 rounded-full border border-orange-200">
+                    <span class="text-xl">🔥</span>
+                    <span class="font-extrabold text-orange-500 text-sm">3 DÍAS</span>
+                </div>
+                <a href="#registro" class="btn-3d bg-[#1CB0F6] border-[#0079C1] text-white font-bold py-2 px-4 rounded-xl text-sm shadow-sm hidden sm:block">
+                    REGISTRARSE
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sección Hero (Presentación con Exo) -->
+    <section class="max-w-5xl mx-auto px-4 py-12 md:py-20 grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+        <!-- Texto Principal (Left) -->
+        <div class="col-span-1 md:col-span-7 space-y-6 text-center md:text-left">
+            <h1 class="text-4xl md:text-5xl font-black leading-tight text-[#3C3C3C]">
+                ¡Domina Excel y tus Finanzas <br class="hidden md:inline">
+                <span class="text-[#1CB0F6] underline decoration-wavy decoration-[#FF9600]">jugando con Exo!</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-500 font-semibold leading-relaxed">
+                Únete a la primera aventura interactiva inspirada en Duolingo que transforma las aburridas hojas de cálculo en misiones épicas de 10 minutos al día.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
+                <a href="#demo-interactiva" class="btn-3d bg-[#58CC02] hover:bg-[#52be02] border-[#46A302] text-white font-extrabold text-lg py-3.5 px-8 rounded-2xl shadow-md text-center">
+                    PROBAR DEMO GRATIS
+                </a>
+                <a href="#registro" class="btn-3d bg-white border-gray-300 hover:bg-gray-50 text-[#1CB0F6] font-extrabold text-lg py-3.5 px-8 rounded-2xl border-2 text-center">
+                    UNIRSE A LA LISTA
+                </a>
+            </div>
+        </div>
+
+        <!-- Mascota Interactiva "Exo" (Right) -->
+        <div class="col-span-1 md:col-span-5 flex flex-col items-center justify-center">
+            <div class="relative w-72 h-72 animate-float">
+                <!-- SVG de Exo, el Búho-Robot de Excel -->
+                <svg id="exo-mascot" class="w-full h-full" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Sombras de base -->
+                    <ellipse cx="100" cy="180" rx="60" ry="10" fill="#E1E5E9"/>
+                    
+                    <!-- Cuerpo Robot/Búho (Azul Duolingo) -->
+                    <rect x="40" y="40" width="120" height="130" rx="60" fill="#1CB0F6" stroke="#0079C1" stroke-width="6"/>
+                    <path d="M40 90C40 90 25 105 25 125C25 145 40 150 40 150" stroke="#0079C1" stroke-width="6" stroke-linecap="round" fill="#1CB0F6" class="animate-wing"/>
+                    <path d="M160 90C160 90 175 105 175 125C175 145 160 150 160 150" stroke="#0079C1" stroke-width="6" stroke-linecap="round" fill="#1CB0F6"/>
+                    
+                    <!-- Orejitas / Antenas de Búho -->
+                    <path d="M50 45 L30 25 L65 35 Z" fill="#0079C1"/>
+                    <path d="M150 45 L170 25 L135 35 Z" fill="#0079C1"/>
+
+                    <!-- Gafas de Celdas de Hoja de Cálculo (Spreadsheet Glasses) -->
+                    <rect x="45" y="65" width="50" height="40" rx="8" fill="white" stroke="#3C3C3C" stroke-width="5"/>
+                    <rect x="105" y="65" width="50" height="40" rx="8" fill="white" stroke="#3C3C3C" stroke-width="5"/>
+                    <line x1="95" y1="85" x2="105" y2="85" stroke="#3C3C3C" stroke-width="5"/>
+                    <!-- Rejilla en las gafas -->
+                    <line x1="70" y1="65" x2="70" y2="105" stroke="#E1F5FE" stroke-width="2"/>
+                    <line x1="45" y1="85" x2="95" y2="85" stroke="#E1F5FE" stroke-width="2"/>
+                    <line x1="130" y1="65" x2="130" y2="105" stroke="#E1F5FE" stroke-width="2"/>
+                    <line x1="105" y1="85" x2="155" y2="85" stroke="#E1F5FE" stroke-width="2"/>
+
+                    <!-- Ojos Animados (Por defecto alegres y vivos) -->
+                    <g id="exo-eyes">
+                        <circle cx="70" cy="85" r="8" fill="#3C3C3C"/>
+                        <circle cx="130" cy="85" r="8" fill="#3C3C3C"/>
+                        <!-- Brillo de los ojos -->
+                        <circle cx="67" cy="82" r="3" fill="white"/>
+                        <circle cx="127" cy="82" r="3" fill="white"/>
+                    </g>
+                    <!-- Ojos de Éxito Ocultos (se activarán por JS) -->
+                    <g id="exo-eyes-happy" class="hidden">
+                        <path d="M60 90 Q70 75 80 90" stroke="#3C3C3C" stroke-width="5" stroke-linecap="round" fill="none"/>
+                        <path d="M120 90 Q130 75 140 90" stroke="#3C3C3C" stroke-width="5" stroke-linecap="round" fill="none"/>
+                    </g>
+
+                    <!-- Pico Naranja del Búho -->
+                    <polygon points="90,95 110,95 100,110" fill="#FF9600" stroke="#D37200" stroke-width="2"/>
+
+                    <!-- Pantalla Digital del Pecho (Gráfico de Finanzas) -->
+                    <rect x="65" y="120" width="70" height="40" rx="6" fill="#0B192C" stroke="#0079C1" stroke-width="3"/>
+                    <!-- Gráfico Financiero de Barras/Líneas verde en la pantalla -->
+                    <path d="M75 150 L85 140 L95 145 L105 132 L115 138 L125 126" stroke="#58CC02" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    <circle cx="125" cy="126" r="3" fill="#58CC02"/>
+                </svg>
+                <!-- Globito de diálogo de Exo -->
+                <div class="absolute -top-6 -right-6 bg-white border-2 border-gray-200 text-[#3C3C3C] p-3 rounded-2xl shadow-md max-w-[160px] text-xs font-bold leading-tight">
+                    <span id="exo-bubble">¡Escribe la fórmula para ganar la misión! 👇</span>
+                    <!-- Flecha del globo -->
+                    <div class="absolute bottom-0 left-4 w-3 h-3 bg-white border-b-2 border-r-2 border-gray-200 rotate-45 transform translate-y-1.5"></div>
+                </div>
+            </div>
+            <p class="text-sm font-extrabold text-[#0079C1] tracking-wider mt-2">EXO: TU GUÍA DE APRENDIZAJE</p>
+        </div>
+    </section>
+
+    <!-- Zona de Demo Interactiva (El Mini-Juego de Excel) -->
+    <section id="demo-interactiva" class="bg-sky-50 border-y-2 border-sky-100 py-16 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-10 space-y-2">
+                <span class="bg-[#1CB0F6] text-white font-extrabold text-xs px-3 py-1 rounded-full tracking-widest uppercase">Misión de Prueba</span>
+                <h2 class="text-3xl font-black text-gray-800">¡Derrota al Primer Desafío!</h2>
+                <p class="text-gray-500 font-semibold">El Rey Arturo necesita sumar las riquezas de sus dos cofres. Completa la celda verde.</p>
+            </div>
+
+            <!-- Interfaz del Simulador de Hojas de Cálculo Gamificado -->
+            <div class="bg-white rounded-3xl border-2 border-sky-200 shadow-xl overflow-hidden">
+                <!-- Barra superior de la lección -->
+                <div class="bg-[#1CB0F6] p-4 flex items-center justify-between text-white border-b-2 border-sky-300">
+                    <div class="flex items-center gap-3">
+                        <span class="font-extrabold tracking-tight">EXCELQUEST BETA</span>
+                        <span class="bg-white/20 px-2 py-0.5 rounded text-xs">NIVEL 1</span>
+                    </div>
+                    <!-- Corazones / Vidas -->
+                    <div class="flex gap-1 text-red-400 text-lg" id="hearts-container">
+                        <span>❤️</span><span>❤️</span><span>❤️</span>
+                    </div>
+                </div>
+
+                <!-- Simulación de la Hoja de Cálculo -->
+                <div class="p-6">
+                    <!-- Instrucciones de la misión -->
+                    <div class="bg-[#E1F5FE] border border-[#1CB0F6]/30 p-4 rounded-2xl mb-6 flex items-start gap-3">
+                        <span class="text-2xl">👑</span>
+                        <div>
+                            <h4 class="font-extrabold text-sky-900 text-sm">Objetivo de la misión:</h4>
+                            <p class="text-xs text-sky-800 font-medium">Suma el Cofre A (Celda A2) y el Cofre B (Celda B2). Escribe tu fórmula en la celda verde C2. ¡Recuerda empezar con el signo igual!</p>
+                        </div>
+                    </div>
+
+                    <!-- Tabla de Excel Estilizada -->
+                    <div class="overflow-x-auto border-2 border-gray-200 rounded-xl mb-6">
+                        <table class="min-w-full text-center text-sm font-semibold divide-y divide-gray-200">
+                            <thead class="bg-gray-100 divide-x divide-gray-200">
+                                <tr>
+                                    <th class="py-2.5 px-4 bg-gray-200 text-gray-500 w-12"></th>
+                                    <th class="py-2.5 px-4 text-[#0079C1]">A (Cofre A)</th>
+                                    <th class="py-2.5 px-4 text-[#0079C1]">B (Cofre B)</th>
+                                    <th class="py-2.5 px-4 text-[#58CC02] font-black">C (Oro Total)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <!-- Fila 1 de encabezados de datos -->
+                                <tr class="divide-x divide-gray-200">
+                                    <td class="py-3 bg-gray-100 font-bold text-gray-500">1</td>
+                                    <td class="py-3 text-gray-400 italic">Oro del Castillo</td>
+                                    <td class="py-3 text-gray-400 italic">Oro de la Taberna</td>
+                                    <td class="py-3 text-gray-400 italic font-bold">Fórmula de Unión</td>
+                                </tr>
+                                <!-- Fila 2 de datos interactivos -->
+                                <tr class="divide-x divide-gray-200 bg-white">
+                                    <td class="py-4 bg-gray-100 font-bold text-gray-500">2</td>
+                                    <td class="py-4 text-lg font-black text-[#3C3C3C] bg-sky-50/50">250</td>
+                                    <td class="py-4 text-lg font-black text-[#3C3C3C] bg-sky-50/50">150</td>
+                                    <!-- Celda Interactiva con Input -->
+                                    <td class="p-2 bg-green-50/70">
+                                        <input type="text" id="excel-formula-input" 
+                                               class="w-full text-center font-mono font-bold text-md text-[#46A302] border-2 border-dashed border-[#58CC02] bg-white py-2 px-3 rounded-lg focus:outline-none focus:ring-4 focus:ring-[#58CC02]/30 transition-all uppercase placeholder-green-400"
+                                               placeholder="=Escribe aquí...">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Botón de Envío / Verificación -->
+                    <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <span id="game-feedback" class="font-extrabold text-sm text-gray-500 transition-all"></span>
+                        <button onclick="verificarFormula()" 
+                                class="btn-3d w-full sm:w-auto bg-[#58CC02] border-[#46A302] text-white font-extrabold py-3 px-8 rounded-xl shadow-md">
+                            COMPROBAR RESPUESTA
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mapa de Ruta / Mundos Interactivos (Estilo Duolingo) -->
+    <section class="max-w-4xl mx-auto px-4 py-16">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-black text-[#3C3C3C]">Tu Mapa de Misiones en ExcelQuest</h2>
+            <p class="text-gray-500 font-semibold mt-2">Sigue el camino interactivo y desbloquea conocimiento nivel por nivel.</p>
+        </div>
+
+        <!-- El sendero de Duolingo -->
+        <div class="flex flex-col items-center gap-6 relative">
+            <!-- Línea de Conexión del Camino -->
+            <div class="absolute top-0 bottom-0 w-2 bg-gray-200 z-0"></div>
+
+            <!-- Nivel 1 (Activo) -->
+            <div class="relative z-10 flex flex-col items-center group cursor-pointer" onclick="showLevelDetails('formulas')">
+                <div class="w-16 h-16 bg-[#1CB0F6] border-b-4 border-[#0079C1] text-white rounded-full flex items-center justify-center text-2xl shadow-lg hover:scale-110 active:translate-y-1 transition-all">
+                    🧮
+                </div>
+                <span class="mt-2 bg-[#E1F5FE] text-[#0079C1] border border-sky-200 font-black text-xs px-3 py-1 rounded-full">Fórmulas Iniciales</span>
+            </div>
+
+            <!-- Nivel 2 -->
+            <div class="relative z-10 flex flex-col items-center group cursor-pointer translate-x-8" onclick="showLevelDetails('condicionales')">
+                <div class="w-16 h-16 bg-[#FF9600] border-b-4 border-[#D37200] text-white rounded-full flex items-center justify-center text-2xl shadow-lg hover:scale-110 active:translate-y-1 transition-all">
+                    ⚖️
+                </div>
+                <span class="mt-2 bg-orange-50 text-[#D37200] border border-orange-200 font-black text-xs px-3 py-1 rounded-full">El Laberinto del "SI"</span>
+            </div>
+
+            <!-- Nivel 3 -->
+            <div class="relative z-10 flex flex-col items-center group cursor-pointer -translate-x-8" onclick="showLevelDetails('tablas')">
+                <div class="w-16 h-16 bg-purple-500 border-b-4 border-purple-700 text-white rounded-full flex items-center justify-center text-2xl shadow-lg hover:scale-110 active:translate-y-1 transition-all">
+                    📊
+                </div>
+                <span class="mt-2 bg-purple-50 text-purple-700 border border-purple-200 font-black text-xs px-3 py-1 rounded-full">Tablas Dinámicas</span>
+            </div>
+
+            <!-- Nivel 4 (Bloqueado) -->
+            <div class="relative z-10 flex flex-col items-center opacity-60">
+                <div class="w-16 h-16 bg-gray-300 border-b-4 border-gray-400 text-gray-500 rounded-full flex items-center justify-center text-2xl shadow-md">
+                    🔒
+                </div>
+                <span class="mt-2 bg-gray-100 text-gray-500 border border-gray-200 font-black text-xs px-3 py-1 rounded-full">Magia de Macros</span>
+            </div>
+
+            <!-- Detalle flotante de la ruta -->
+            <div id="path-details-card" class="mt-6 bg-white border-2 border-gray-200 p-6 rounded-2xl max-w-sm text-center shadow-lg transition-all transform scale-100">
+                <h4 id="detail-title" class="font-black text-[#3C3C3C] text-lg">Mundo 1: Fórmulas Iniciales</h4>
+                <p id="detail-text" class="text-sm text-gray-500 font-medium mt-1">Aprende a sumar, restar y automatizar con variables sin esfuerzo junto a tus primeros aliados en el juego.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gráficos Animados Interactivos (Estadísticas de Crecimiento) -->
+    <section class="bg-white border-t-2 border-gray-200 py-16 px-4">
+        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+            <!-- Texto (Right / Left inversion) -->
+            <div class="col-span-1 md:col-span-6 space-y-6">
+                <span class="bg-[#FF9600] text-white font-extrabold text-xs px-3 py-1 rounded-full tracking-widest uppercase">Visualización de Progreso</span>
+                <h2 class="text-3xl font-black text-[#3C3C3C]">Monitorea tu Crecimiento en Tiempo Real</h2>
+                <p class="text-gray-500 font-semibold leading-relaxed">
+                    Al igual que tu racha de días, el simulador financiero integrado de ExcelQuest te muestra gráficos dinámicos de tu aprendizaje y de tu salud financiera real a medida que completas misiones.
+                </p>
+                <!-- Mini lista de checks interactivos -->
+                <ul class="space-y-3 font-bold text-sm text-gray-600">
+                    <li class="flex items-center gap-2">
+                        <span class="text-[#58CC02] text-xl">✓</span> XP acumulada convertible en recompensas de juego.
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <span class="text-[#58CC02] text-xl">✓</span> Simulación interactiva de presupuestos reales.
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <span class="text-[#58CC02] text-xl">✓</span> Gráficos dinámicos interactivos.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Gráfico SVG Animado Interactivo -->
+            <div class="col-span-1 md:col-span-6 bg-[#0B192C] p-6 rounded-3xl border-4 border-[#1E3E62] shadow-xl relative overflow-hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="font-extrabold text-white text-xs tracking-wider">CRECIMIENTO DE APRENDIZAJE</span>
+                    <span class="bg-[#58CC02] text-white font-black text-[10px] px-2 py-0.5 rounded">¡MÁXIMO XP!</span>
+                </div>
+                
+                <!-- SVG de Gráfico Lineal Interactivo -->
+                <svg class="w-full h-48" viewBox="0 0 300 150">
+                    <!-- Cuadrícula del gráfico -->
+                    <line x1="10" y1="130" x2="290" y2="130" stroke="#1E3E62" stroke-width="2"/>
+                    <line x1="10" y1="10" x2="10" y2="130" stroke="#1E3E62" stroke-width="2"/>
+                    
+                    <line x1="10" y1="90" x2="290" y2="90" stroke="#1E3E62" stroke-dasharray="4" stroke-width="1"/>
+                    <line x1="10" y1="50" x2="290" y2="50" stroke="#1E3E62" stroke-dasharray="4" stroke-width="1"/>
+
+                    <!-- Línea del gráfico de progreso animado -->
+                    <path d="M10 120 Q50 110 90 85 T170 55 T250 20 T290 10" 
+                          fill="none" 
+                          stroke="#1CB0F6" 
+                          stroke-width="5" 
+                          stroke-linecap="round"
+                          id="chart-line"
+                          style="stroke-dasharray: 400; stroke-dashoffset: 400; transition: stroke-dashoffset 3s ease-out;"/>
+
+                    <!-- Puntos del gráfico interactivos -->
+                    <circle cx="90" cy="85" r="5" fill="#FF9600" class="cursor-pointer hover:r-7 transition-all" onclick="updateChartDetail('Misión 1 Completada: +150 XP')"/>
+                    <circle cx="170" cy="55" r="5" fill="#FF9600" class="cursor-pointer hover:r-7 transition-all" onclick="updateChartDetail('Misión 2 Completada: +300 XP')"/>
+                    <circle cx="250" cy="20" r="5" fill="#58CC02" class="cursor-pointer hover:r-7 transition-all" onclick="updateChartDetail('Certificación Obtenida: ¡Nivel Pro!')"/>
+                </svg>
+
+                <div class="mt-4 p-3 bg-white/5 rounded-xl border border-white/10 text-center">
+                    <p id="chart-info-text" class="text-xs text-sky-200 font-extrabold uppercase tracking-wide">Haz clic en los nodos naranjas del gráfico para ver hitos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulario / Creador de Perfil Gamificado -->
+    <section id="registro" class="bg-sky-50 py-16 px-4">
+        <div class="max-w-xl mx-auto bg-white border-2 border-gray-200 p-8 rounded-3xl shadow-xl">
+            <div class="text-center mb-8 space-y-2">
+                <span class="text-3xl">🛡️</span>
+                <h3 class="text-2xl font-black text-gray-800">Crea tu Perfil de Aventurero</h3>
+                <p class="text-gray-500 font-semibold text-sm">Reserva tu acceso anticipado gratuito y desbloquea el "Cofre del Fundador" en el lanzamiento.</p>
+            </div>
+
+            <!-- Formulario interactivo -->
+            <form id="avatar-form" class="space-y-6" onsubmit="handleRegistration(event)">
+                <!-- Nombre -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-extrabold text-gray-600 uppercase tracking-wider">Nombre de tu Avatar</label>
+                    <input type="text" id="reg-name" required placeholder="Ej. Alex El Fórmulas" 
+                           class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-[#1CB0F6] font-semibold transition-all">
+                </div>
+
+                <!-- Correo -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-extrabold text-gray-600 uppercase tracking-wider">Canal de comunicación (Correo)</label>
+                    <input type="email" id="reg-email" required placeholder="alex@ejemplo.com" 
+                           class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-[#1CB0F6] font-semibold transition-all">
+                </div>
+
+                <!-- Clase de Personaje -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-extrabold text-gray-600 uppercase tracking-wider">Elige tu Clase de Héroe</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div onclick="selectClass('Estudiante')" id="class-student" 
+                             class="class-selector border-2 border-gray-200 p-4 rounded-xl text-center cursor-pointer hover:border-[#1CB0F6] transition-all bg-gray-50">
+                            <span class="text-2xl block">🎓</span>
+                            <span class="font-extrabold text-xs block mt-1">Estudiante</span>
+                        </div>
+                        <div onclick="selectClass('Profesional')" id="class-pro" 
+                             class="class-selector border-2 border-gray-200 p-4 rounded-xl text-center cursor-pointer hover:border-[#1CB0F6] transition-all bg-gray-50">
+                            <span class="text-2xl block">💼</span>
+                            <span class="font-extrabold text-xs block mt-1">Profesional</span>
+                        </div>
+                        <div onclick="selectClass('Emprendedor')" id="class-entrepreneur" 
+                             class="class-selector border-2 border-gray-200 p-4 rounded-xl text-center cursor-pointer hover:border-[#1CB0F6] transition-all bg-gray-50">
+                            <span class="text-2xl block">🚀</span>
+                            <span class="font-extrabold text-xs block mt-1">Emprendedor</span>
+                        </div>
+                        <div onclick="selectClass('Gremio / Empresa')" id="class-corp" 
+                             class="class-selector border-2 border-gray-200 p-4 rounded-xl text-center cursor-pointer hover:border-[#1CB0F6] transition-all bg-gray-50">
+                            <span class="text-2xl block">🏰</span>
+                            <span class="font-extrabold text-xs block mt-1">Gremio / Empresa</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botón de Envío -->
+                <button type="submit" class="btn-3d w-full bg-[#58CC02] border-[#46A302] text-white font-black text-lg py-4 rounded-2xl shadow-md uppercase tracking-wider">
+                    ¡EMPEZAR MI AVENTURA!
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer Estilo Duolingo -->
+    <footer class="bg-[#0B192C] text-gray-400 py-12 px-4 border-t-4 border-[#1CB0F6]">
+        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
+            <span class="text-xl font-black text-white">Excel<span class="text-[#1CB0F6]">Quest</span></span>
+            <p class="text-sm text-center sm:text-right">&copy; 2026 ExcelQuest. Convierte el conocimiento de datos en tu mayor victoria.</p>
+        </div>
+    </footer>
+
+    <!-- Logica Interactiva en JavaScript -->
+    <script>
+        // Inicializar animaciones de gráficos al cargar la página
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const chartLine = document.getElementById('chart-line');
+                if (chartLine) {
+                    chartLine.style.strokeDashoffset = '0';
+                }
+            }, 500);
+        });
+
+        // Configuración de la clase seleccionada por defecto
+        let selectedCharacterClass = "";
+
+        function selectClass(className) {
+            selectedCharacterClass = className;
+            // Remover estilos seleccionados de todos
+            document.querySelectorAll('.class-selector').forEach(el => {
+                el.classList.remove('border-[#1CB0F6]', 'bg-[#E1F5FE]/40');
+                el.classList.add('border-gray-200', 'bg-gray-50');
+            });
+            // Añadir estilos al seleccionado
+            const activeId = className === 'Estudiante' ? 'class-student' :
+                             className === 'Profesional' ? 'class-pro' :
+                             className === 'Emprendedor' ? 'class-entrepreneur' : 'class-corp';
+            
+            const activeEl = document.getElementById(activeId);
+            if (activeEl) {
+                activeEl.classList.remove('border-gray-200', 'bg-gray-50');
+                activeEl.classList.add('border-[#1CB0F6]', 'bg-[#E1F5FE]/40');
+            }
+        }
+
+        // Simulación de respuesta de Excel
+        let attemptsLeft = 3;
+
+        function verificarFormula() {
+            const inputVal = document.getElementById('excel-formula-input').value.trim().toUpperCase();
+            const feedback = document.getElementById('game-feedback');
+            const hearts = document.getElementById('hearts-container');
+            
+            // Fórmulas correctas posibles
+            const respuestasCorrectas = ["=A2+B2", "=SUMA(A2:B2)", "=SUMA(A2;B2)", "=B2+A2"];
+
+            if (respuestasCorrectas.includes(inputVal)) {
+                // ÉXITO
+                feedback.innerHTML = "🎉 ¡Misión cumplida! Exo está orgulloso de ti.";
+                feedback.className = "font-extrabold text-sm text-[#58CC02] transition-all";
+                
+                // Cambiar ojos de Exo a felices
+                document.getElementById('exo-eyes').classList.add('hidden');
+                document.getElementById('exo-eyes-happy').classList.remove('hidden');
+                document.getElementById('exo-bubble').innerText = "¡Excelente! Has sumado el oro del Rey. 👑";
+
+                // Audio sintético de victoria (Web Audio API)
+                playVictorySound();
+
+                // Lanzar confeti
+                startConfetti();
+            } else {
+                // FALLO
+                attemptsLeft--;
+                if (attemptsLeft > 0) {
+                    feedback.innerHTML = `❌ Error en la fórmula. Te quedan ${attemptsLeft} intentos.`;
+                    feedback.className = "font-extrabold text-sm text-red-500 transition-all";
+                    document.getElementById('exo-bubble').innerText = "¡Cuidado! Recuerda empezar con '='";
+                    playErrorSound();
+                    
+                    // Actualizar corazones
+                    hearts.innerHTML = "<span>❤️</span>".repeat(attemptsLeft);
+                } else {
+                    feedback.innerHTML = "👾 ¡Derrota! Reiniciando desafío en un momento...";
+                    feedback.className = "font-extrabold text-sm text-red-600 transition-all";
+                    hearts.innerHTML = "<span>💔</span>";
+                    playErrorSound();
+                    setTimeout(() => {
+                        attemptsLeft = 3;
+                        hearts.innerHTML = "<span>❤️</span>".repeat(attemptsLeft);
+                        feedback.innerHTML = "";
+                        document.getElementById('excel-formula-input').value = "";
+                        document.getElementById('exo-eyes').classList.remove('hidden');
+                        document.getElementById('exo-eyes-happy').classList.add('hidden');
+                        document.getElementById('exo-bubble').innerText = "¡Vamos, inténtalo de nuevo!";
+                    }, 3000);
+                }
+            }
+        }
+
+        // Generación de Sonido por Sintetizador (Web Audio API)
+        function playVictorySound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const now = ctx.currentTime;
+                
+                // Nota 1
+                const osc1 = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc1.type = 'triangle';
+                osc1.frequency.setValueAtTime(523.25, now); // Do5
+                osc1.frequency.setValueAtTime(659.25, now + 0.1); // Mi5
+                osc1.frequency.setValueAtTime(783.99, now + 0.2); // Sol5
+                osc1.frequency.setValueAtTime(1046.50, now + 0.3); // Do6
+                
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.6);
+                
+                osc1.connect(gain);
+                gain.connect(ctx.destination);
+                osc1.start(now);
+                osc1.stop(now + 0.6);
+            } catch(e) {
+                console.log("Audio no soportado");
+            }
+        }
+
+        function playErrorSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const now = ctx.currentTime;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, now);
+                osc.frequency.exponentialRampToValueAtTime(80, now + 0.2);
+                
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            } catch(e) {}
+        }
+
+        // Motor de Confeti Ligero nativo
+        let confettiActive = false;
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let pieces = [];
+
+        function startConfetti() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            pieces = [];
+            for (let i = 0; i < 100; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    r: Math.random() * 6 + 4,
+                    d: Math.random() * canvas.height,
+                    color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+                    tilt: Math.random() * 10 - 5,
+                    tiltAngleIncremental: Math.random() * 0.07 + 0.02,
+                    tiltAngle: 0
+                });
+            }
+            confettiActive = true;
+            animateConfetti();
+            setTimeout(() => { confettiActive = false; }, 3000); // detiene generación en 3 seg
+        }
+
+        function animateConfetti() {
+            if (!confettiActive && pieces.length === 0) {
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                return;
+            }
+            requestAnimationFrame(animateConfetti);
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            
+            pieces.forEach((p, index) => {
+                p.tiltAngle += p.tiltAngleIncremental;
+                p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
+                p.x += Math.sin(p.tiltAngle);
+                p.tilt = Math.sin(p.tiltAngle - index / 3) * 15;
+                
+                ctx.beginPath();
+                ctx.lineWidth = p.r;
+                ctx.strokeStyle = p.color;
+                ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+                ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
+                ctx.stroke();
+                
+                if (p.y > canvas.height) {
+                    if (confettiActive) {
+                        pieces[index] = {
+                            x: Math.random() * canvas.width,
+                            y: -20,
+                            r: p.r,
+                            d: p.d,
+                            color: p.color,
+                            tilt: p.tilt,
+                            tiltAngleIncremental: p.tiltAngleIncremental,
+                            tiltAngle: p.tiltAngle
+                        };
+                    } else {
+                        pieces.splice(index, 1);
+                    }
+                }
+            });
+        }
+
+        // Mostrar detalles de mundos al dar clic en la ruta
+        const levelDetails = {
+            formulas: {
+                title: "Mundo 1: Fórmulas Iniciales",
+                text: "Aprende a sumar, restar y automatizar con variables sin esfuerzo junto a tus primeros aliados en el juego."
+            },
+            condicionales: {
+                title: "Mundo 2: El Templo de la Lógica 'SI'",
+                text: "Aprende a tomar decisiones automáticas en tus datos. Si el oro baja, ¡lanza una alarma!"
+            },
+            tablas: {
+                title: "Mundo 3: Montaña Dinámica",
+                text: "Organiza miles de filas de datos en un abrir y cerrar de ojos. El tesoro definitivo de los analistas."
+            }
+        };
+
+        function showLevelDetails(id) {
+            const detail = levelDetails[id];
+            const card = document.getElementById('path-details-card');
+            
+            // Animación de salida y entrada rápida
+            card.style.transform = "scale(0.9)";
+            card.style.opacity = "0";
+            
+            setTimeout(() => {
+                document.getElementById('detail-title').innerText = detail.title;
+                document.getElementById('detail-text').innerText = detail.text;
+                card.style.transform = "scale(1)";
+                card.style.opacity = "1";
+            }, 150);
+        }
+
+        // Actualizar detalles del Gráfico de Progreso
+        function updateChartDetail(text) {
+            const textEl = document.getElementById('chart-info-text');
+            textEl.innerText = text;
+            textEl.classList.add('text-[#58CC02]');
+            setTimeout(() => {
+                textEl.classList.remove('text-[#58CC02]');
+            }, 2000);
+        }
+
+        // Manejo de Registro Final
+        function handleRegistration(e) {
+            e.preventDefault();
+            const avatarName = document.getElementById('reg-name').value;
+            const avatarEmail = document.getElementById('reg-email').value;
+            
+            if (!selectedCharacterClass) {
+                alert("Por favor elige una Clase de Héroe para comenzar la partida.");
+                return;
+            }
+
+            // Simulación exitosa de registro
+            alert(`⚔️ ¡Perfil Creado!\n\nNombre: ${avatarName}\nClase: ${selectedCharacterClass}\n\nSe ha reservado tu Cofre del Fundador. Revisa tu correo (${avatarEmail}) para el acceso de preventa.`);
+            document.getElementById('avatar-form').reset();
+            document.querySelectorAll('.class-selector').forEach(el => {
+                el.classList.remove('border-[#1CB0F6]', 'bg-[#E1F5FE]/40');
+                el.classList.add('border-gray-200', 'bg-gray-50');
+            });
+        }
+    </script>
+</body>
+</html>

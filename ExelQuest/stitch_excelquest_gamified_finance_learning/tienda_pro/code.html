@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        .tactile-button {
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.2);
+        }
+        .tactile-button:hover {
+            transform: translateY(1px);
+            box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.2);
+        }
+        .tactile-button:active {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0 0 rgba(0, 0, 0, 0.2);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-low": "#f4f3f2",
+                    "on-primary-container": "#ffffff",
+                    "secondary": "#455b9d",
+                    "inverse-primary": "#a3c9ff",
+                    "on-primary-fixed-variant": "#004883",
+                    "primary": "#005faa",
+                    "on-error-container": "#93000a",
+                    "on-surface": "#1a1c1c",
+                    "outline": "#717783",
+                    "on-tertiary-container": "#ffffff",
+                    "surface-container": "#efeeed",
+                    "tertiary-fixed": "#d5e4f3",
+                    "secondary-container": "#a0b6fe",
+                    "background": "#faf9f8",
+                    "on-tertiary-fixed-variant": "#3a4854",
+                    "inverse-surface": "#2f3130",
+                    "on-secondary-container": "#2f4686",
+                    "on-background": "#1a1c1c",
+                    "on-primary-fixed": "#001c39",
+                    "on-secondary-fixed-variant": "#2c4383",
+                    "primary-fixed-dim": "#a3c9ff",
+                    "on-secondary-fixed": "#00174b",
+                    "primary-fixed": "#d3e3ff",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#f1f0ef",
+                    "secondary-fixed-dim": "#b4c5ff",
+                    "surface-container-highest": "#e3e2e1",
+                    "surface-container-high": "#e9e8e7",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#faf9f8",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#0f1d28",
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#e3e2e1",
+                    "surface-container-lowest": "#ffffff",
+                    "outline-variant": "#c0c7d4",
+                    "on-surface-variant": "#404752",
+                    "tertiary": "#515f6c",
+                    "surface-dim": "#dadad9",
+                    "primary-container": "#0078d4",
+                    "surface": "#faf9f8",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#b9c8d7",
+                    "tertiary-container": "#6a7885",
+                    "surface-tint": "#0060ab",
+                    "secondary-fixed": "#dbe1ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1200px",
+                    "gutter": "20px",
+                    "base": "4px",
+                    "lg": "32px",
+                    "sm": "16px",
+                    "xs": "8px",
+                    "md": "24px",
+                    "xl": "48px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Inter"],
+                    "title-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-code": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-code": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- Top Navigation (Shell Component) -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-secondary dark:bg-surface-container-high transition-all duration-200">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-on-primary">favorite</span>
+<h1 class="text-on-primary font-extrabold text-title-md font-title-md">ExcelQuest Pro</h1>
+</div>
+<div class="flex items-center bg-on-primary/20 rounded-full px-sm py-xs text-on-primary font-bold text-body-md">
+            5 🔥
+        </div>
+</header>
+<main class="pt-24 px-gutter max-w-container-max mx-auto">
+<!-- Hero Section -->
+<section class="flex flex-col items-center text-center mb-xl">
+<div class="relative w-48 h-48 mb-md animate-float">
+<div class="absolute inset-0 bg-primary-fixed blur-3xl opacity-30 rounded-full"></div>
+<img class="relative z-10 w-full h-full object-contain rounded-xl" data-alt="A luxurious isometric 3D render of a golden crown resting atop a sleek, translucent blue Microsoft Excel spreadsheet icon. The scene is illuminated by soft, cinematic studio lighting with a clean light-mode aesthetic. High-quality corporate 3D style with vibrant primary blue accents and soft gradients. The background is a minimalist, professional gray, suggesting a premium software upgrade experience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuByEwQsYquxZq4KyKvGY_7PcRt-czUwc-K3tF75KSUx2VY-daQ1jIX3t9Q8ugUKfwBExJCG3oroTJ5V1K1CQJ8aKsj0GehXhTLep5s5HR_gk7Gcn1va8MSJhWSoQcGk5PVx1n_7moM-0N0RNG2cU2uM9Ucckj1iBWPseiPlxr8By3Q6QTsl5STDemXAxrQSWp7VP_GInyhKjoYGw8tK7TWG-GPchDEC5U68jGiO2rrQlYFHERdVA27NIsJCYX980_gwMqFfRjYq9wE"/>
+</div>
+<h2 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-primary mb-xs">Desbloquea ExcelQuest Pro</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-lg">Domina las hojas de cálculo más rápido con herramientas exclusivas y aprendizaje sin interrupciones.</p>
+</section>
+<!-- Features Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md mb-xl">
+<div class="bg-surface-container-lowest p-md rounded-xl border-b-4 border-surface-container-highest flex items-start gap-md transition-transform hover:-translate-y-1">
+<div class="bg-primary-container/10 p-sm rounded-lg">
+<span class="material-symbols-outlined text-primary text-3xl filled-icon">favorite</span>
+</div>
+<div>
+<h3 class="text-title-md font-title-md text-on-surface">Vidas ilimitadas</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Práctica sin miedo a los errores. Tu racha no se detendrá nunca.</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-xl border-b-4 border-surface-container-highest flex items-start gap-md transition-transform hover:-translate-y-1">
+<div class="bg-primary-container/10 p-sm rounded-lg">
+<span class="material-symbols-outlined text-primary text-3xl">block</span>
+</div>
+<div>
+<h3 class="text-title-md font-title-md text-on-surface">Sin anuncios</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Mantén el enfoque total en tus fórmulas sin interrupciones molestas.</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-xl border-b-4 border-surface-container-highest flex items-start gap-md transition-transform hover:-translate-y-1">
+<div class="bg-primary-container/10 p-sm rounded-lg">
+<span class="material-symbols-outlined text-primary text-3xl">workspace_premium</span>
+</div>
+<div>
+<h3 class="text-title-md font-title-md text-on-surface">Certificados gratuitos</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Valida tus habilidades con certificados oficiales al completar cada nivel.</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-xl border-b-4 border-surface-container-highest flex items-start gap-md transition-transform hover:-translate-y-1">
+<div class="bg-primary-container/10 p-sm rounded-lg">
+<span class="material-symbols-outlined text-primary text-3xl">psychology</span>
+</div>
+<div>
+<h3 class="text-title-md font-title-md text-on-surface">Soporte de IA</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Recibe explicaciones personalizadas de nuestra IA para fórmulas complejas.</p>
+</div>
+</div>
+</div>
+<!-- Pricing Section -->
+<div class="flex flex-col md:flex-row gap-md mb-xl">
+<!-- Monthly Card -->
+<div class="flex-1 bg-surface-container-lowest p-lg rounded-xl border-2 border-surface-container-highest flex flex-col items-center text-center">
+<span class="text-label-sm font-label-sm text-on-surface-variant mb-xs">PLAN BÁSICO</span>
+<h4 class="text-title-md font-title-md text-on-surface mb-md">Mensual</h4>
+<div class="flex items-baseline gap-xs mb-lg">
+<span class="text-headline-lg font-headline-lg text-on-surface">$9.99</span>
+<span class="text-body-md font-body-md text-on-surface-variant">/mes</span>
+</div>
+<ul class="text-body-md font-body-md text-on-surface-variant text-left space-y-xs w-full mb-lg">
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-primary text-sm filled-icon">check_circle</span> Acceso total</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-primary text-sm filled-icon">check_circle</span> Soporte prioritario</li>
+</ul>
+<button class="w-full py-md px-lg bg-surface-container-high text-on-surface font-bold rounded-xl tactile-button">
+                    Seleccionar
+                </button>
+</div>
+<!-- Annual Card (Popular) -->
+<div class="flex-1 bg-white p-lg rounded-xl border-2 border-primary relative flex flex-col items-center text-center shadow-lg transform md:scale-105">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-label-sm font-label-sm px-md py-1 rounded-full uppercase tracking-wider">
+                    Mejor Valor
+                </div>
+<span class="text-label-sm font-label-sm text-primary mb-xs">PLAN MAESTRO</span>
+<h4 class="text-title-md font-title-md text-on-surface mb-md">Anual</h4>
+<div class="flex flex-col items-center gap-0 mb-lg">
+<div class="flex items-baseline gap-xs">
+<span class="text-headline-lg font-headline-lg text-on-surface">$71.90</span>
+<span class="text-body-md font-body-md text-on-surface-variant">/año</span>
+</div>
+<span class="text-label-sm font-label-sm text-primary font-bold">Ahorra 40%</span>
+</div>
+<ul class="text-body-md font-body-md text-on-surface-variant text-left space-y-xs w-full mb-lg">
+<li class="flex items-center gap-xs font-bold text-on-surface"><span class="material-symbols-outlined text-primary text-sm filled-icon">check_circle</span> Todo lo de Pro</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-primary text-sm filled-icon">check_circle</span> Desafíos offline</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-primary text-sm filled-icon">check_circle</span> Badge de perfil Pro</li>
+</ul>
+<button class="w-full py-md px-lg bg-primary text-on-primary font-bold rounded-xl tactile-button border-b-4 border-on-primary-fixed-variant">
+                    Seleccionar Anual
+                </button>
+</div>
+</div>
+<!-- Call to Action -->
+<div class="fixed bottom-24 left-0 w-full px-gutter z-40 pointer-events-none">
+<div class="max-w-container-max mx-auto pointer-events-auto">
+<button class="w-full py-lg px-xl bg-primary text-on-primary text-title-md font-title-md rounded-xl tactile-button border-b-4 border-on-primary-fixed-variant shadow-xl">
+                    Probar 7 días gratis
+                </button>
+<p class="text-center text-label-sm font-label-sm text-on-surface-variant mt-sm">Sin cargos si cancelas antes del día 7.</p>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Shell Component) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 bg-surface dark:bg-surface-container-lowest border-t-2 border-surface-container-highest dark:border-outline-variant">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-transform duration-100 active:translate-y-1" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="text-label-sm font-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-transform duration-100 active:translate-y-1" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="text-label-sm font-label-sm">Leaders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-transform duration-100 active:translate-y-1" href="#">
+<span class="material-symbols-outlined">task_alt</span>
+<span class="text-label-sm font-label-sm">Quests</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-transform duration-100 active:translate-y-1" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-sm font-label-sm">Profile</span>
+</a>
+<!-- Shop is Active -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim font-bold hover:bg-surface-container-low transition-transform duration-100 active:translate-y-1" href="#">
+<span class="material-symbols-outlined filled-icon">shopping_bag</span>
+<span class="text-label-sm font-label-sm">Shop</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for button presses
+        document.querySelectorAll('.tactile-button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.style.transform = 'translateY(4px)';
+                button.style.boxShadow = 'none';
+            });
+            button.addEventListener('mouseup', () => {
+                button.style.transform = 'translateY(1px)';
+                button.style.boxShadow = '0 3px 0 0 rgba(0, 0, 0, 0.2)';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = 'translateY(0px)';
+                button.style.boxShadow = '0 4px 0 0 rgba(0, 0, 0, 0.2)';
+            });
+        });
+    </script>
+</body></html>

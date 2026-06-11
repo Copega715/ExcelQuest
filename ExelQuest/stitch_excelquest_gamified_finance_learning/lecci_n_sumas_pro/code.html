@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Excel Basics: Sums - Lesson</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-low": "#f4f3f2",
+                    "on-primary-container": "#ffffff",
+                    "secondary": "#455b9d",
+                    "inverse-primary": "#a3c9ff",
+                    "on-primary-fixed-variant": "#004883",
+                    "primary": "#005faa",
+                    "on-error-container": "#93000a",
+                    "on-surface": "#1a1c1c",
+                    "outline": "#717783",
+                    "on-tertiary-container": "#ffffff",
+                    "surface-container": "#efeeed",
+                    "tertiary-fixed": "#d5e4f3",
+                    "secondary-container": "#a0b6fe",
+                    "background": "#faf9f8",
+                    "on-tertiary-fixed-variant": "#3a4854",
+                    "inverse-surface": "#2f3130",
+                    "on-secondary-container": "#2f4686",
+                    "on-background": "#1a1c1c",
+                    "on-primary-fixed": "#001c39",
+                    "on-secondary-fixed-variant": "#2c4383",
+                    "primary-fixed-dim": "#a3c9ff",
+                    "on-secondary-fixed": "#00174b",
+                    "primary-fixed": "#d3e3ff",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#f1f0ef",
+                    "secondary-fixed-dim": "#b4c5ff",
+                    "surface-container-highest": "#e3e2e1",
+                    "surface-container-high": "#e9e8e7",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#faf9f8",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#0f1d28",
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#e3e2e1",
+                    "surface-container-lowest": "#ffffff",
+                    "outline-variant": "#c0c7d4",
+                    "on-surface-variant": "#404752",
+                    "tertiary": "#515f6c",
+                    "surface-dim": "#dadad9",
+                    "primary-container": "#0078d4",
+                    "surface": "#faf9f8",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#b9c8d7",
+                    "tertiary-container": "#6a7885",
+                    "surface-tint": "#0060ab",
+                    "secondary-fixed": "#dbe1ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1200px",
+                    "gutter": "20px",
+                    "base": "4px",
+                    "lg": "32px",
+                    "sm": "16px",
+                    "xs": "8px",
+                    "md": "24px",
+                    "xl": "48px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Inter"],
+                    "title-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-code": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-code": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tactile-button {
+            transition: all 0.1s ease;
+            box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.1);
+        }
+        .tactile-button:hover {
+            transform: translateY(1px);
+            box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.1);
+        }
+        .tactile-button:active {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0 0 rgba(0, 0, 0, 0.1);
+        }
+        .primary-tactile {
+            box-shadow: 0 4px 0 0 #004883;
+        }
+        .primary-tactile:active {
+            box-shadow: 0 0px 0 0 #004883;
+        }
+        .formula-slot {
+            min-width: 40px;
+            height: 48px;
+            border-bottom: 2px solid #c0c7d4;
+        }
+        .sheet-cell {
+            border: 0.5px solid #e3e2e1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md text-body-md overflow-x-hidden">
+<!-- Top Navigation Shell -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-secondary dark:bg-surface-container-high text-on-primary dark:text-inverse-primary">
+<div class="flex items-center gap-xs">
+<button class="material-symbols-outlined p-xs hover:bg-on-primary/10 transition-all duration-200 active:scale-95 rounded-full" data-icon="close">close</button>
+<div class="flex-1 ml-xs">
+<div class="w-48 md:w-64 h-3 bg-white/20 rounded-full overflow-hidden">
+<div class="h-full bg-on-primary-container w-3/4 rounded-full transition-all duration-500 shadow-sm"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-xs">
+<span class="text-title-md font-title-md font-extrabold text-on-primary">5 🔥</span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 mt-16 pb-32 px-gutter max-w-container-max mx-auto w-full flex flex-col">
+<!-- Question Section -->
+<section class="mt-lg mb-md text-center md:text-left">
+<h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg mb-xs">¿Qué fórmula sumaría el rango A1 a A10?</h1>
+<p class="text-on-surface-variant">Selecciona los bloques para construir la fórmula correcta.</p>
+</section>
+<!-- Sheet Preview Bento Grid Area -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-md mb-lg">
+<div class="md:col-span-8 bg-surface-container-lowest p-md rounded-xl shadow-sm border-b-2 border-surface-container-highest">
+<div class="flex items-center gap-xs mb-sm">
+<span class="material-symbols-outlined text-primary" data-icon="table_view">table_view</span>
+<span class="font-bold text-on-surface">Vista Previa de Hoja</span>
+</div>
+<!-- Spreadsheet UI -->
+<div class="overflow-x-auto">
+<table class="w-full border-collapse bg-white font-label-code text-label-code">
+<thead>
+<tr class="bg-surface-container">
+<th class="w-10 sheet-cell p-xs text-on-surface-variant bg-surface-container-high"></th>
+<th class="sheet-cell p-xs text-on-surface-variant font-bold">A</th>
+<th class="sheet-cell p-xs text-on-surface-variant font-bold">B</th>
+<th class="sheet-cell p-xs text-on-surface-variant font-bold">C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="bg-surface-container-high sheet-cell p-xs text-center text-on-surface-variant">1</td>
+<td class="sheet-cell p-xs text-right bg-primary/5 border-primary/20">45</td>
+<td class="sheet-cell p-xs text-right">0.12</td>
+<td class="sheet-cell p-xs text-right">Draft</td>
+</tr>
+<tr>
+<td class="bg-surface-container-high sheet-cell p-xs text-center text-on-surface-variant">2</td>
+<td class="sheet-cell p-xs text-right bg-primary/5 border-primary/20">12</td>
+<td class="sheet-cell p-xs text-right">0.45</td>
+<td class="sheet-cell p-xs text-right">Final</td>
+</tr>
+<tr>
+<td class="bg-surface-container-high sheet-cell p-xs text-center text-on-surface-variant">3</td>
+<td class="sheet-cell p-xs text-right bg-primary/5 border-primary/20">89</td>
+<td class="sheet-cell p-xs text-right">0.78</td>
+<td class="sheet-cell p-xs text-right">Draft</td>
+</tr>
+<tr>
+<td class="bg-surface-container-high sheet-cell p-xs text-center text-on-surface-variant">...</td>
+<td class="sheet-cell p-xs text-right bg-primary/5 border-primary/20">...</td>
+<td class="sheet-cell p-xs text-right">...</td>
+<td class="sheet-cell p-xs text-right">...</td>
+</tr>
+<tr>
+<td class="bg-surface-container-high sheet-cell p-xs text-center text-on-surface-variant">10</td>
+<td class="sheet-cell p-xs text-right bg-primary/5 border-primary/20">23</td>
+<td class="sheet-cell p-xs text-right">1.02</td>
+<td class="sheet-cell p-xs text-right">Archive</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Helpful Hint Card -->
+<div class="md:col-span-4 bg-primary-fixed text-on-primary-fixed p-md rounded-xl border-b-2 border-primary/20 flex flex-col justify-between relative overflow-hidden">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-headline-lg mb-sm block" data-icon="lightbulb" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<h3 class="text-title-md font-title-md mb-xs">Tip Pro</h3>
+<p class="text-body-md opacity-90">Los dos puntos <b>":"</b> en Excel definen un rango continuo de celdas desde el inicio hasta el fin.</p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10 rotate-12">
+<span class="material-symbols-outlined text-[120px]" data-icon="functions">functions</span>
+</div>
+</div>
+</section>
+<!-- Formula Builder Interaction Area -->
+<section class="flex flex-col items-center gap-lg">
+<!-- Target Slot Area -->
+<div class="w-full max-w-2xl bg-surface-container-low p-lg rounded-xl border-2 border-dashed border-outline-variant flex flex-wrap items-center justify-center gap-sm min-h-[100px]" id="formula-canvas">
+<div class="flex items-center gap-xs px-sm py-xs bg-white rounded-lg shadow-sm border-b-2 border-surface-container-highest">
+<span class="material-symbols-outlined text-primary" data-icon="functions">functions</span>
+</div>
+<!-- Dynamic Formula Chips will go here -->
+<div class="flex flex-wrap gap-xs" id="drop-zone">
+<!-- Placeholder logic -->
+</div>
+</div>
+<!-- Available Blocks -->
+<div class="flex flex-wrap justify-center gap-md">
+<button class="tactile-button bg-white px-md py-sm rounded-lg font-label-code text-label-code text-primary border-b-4 border-surface-container-highest active:translate-y-1 active:border-b-0" onclick="addToken(this, '=SUMA(')">
+                    =SUMA(
+                </button>
+<button class="tactile-button bg-white px-md py-sm rounded-lg font-label-code text-label-code text-primary border-b-4 border-surface-container-highest active:translate-y-1 active:border-b-0" onclick="addToken(this, 'A1:A10')">
+                    A1:A10
+                </button>
+<button class="tactile-button bg-white px-md py-sm rounded-lg font-label-code text-label-code text-primary border-b-4 border-surface-container-highest active:translate-y-1 active:border-b-0" onclick="addToken(this, ')')">
+                    )
+                </button>
+<button class="tactile-button bg-white px-md py-sm rounded-lg font-label-code text-label-code text-primary border-b-4 border-surface-container-highest active:translate-y-1 active:border-b-0" onclick="addToken(this, 'PROMEDIO')">
+                    PROMEDIO
+                </button>
+<button class="tactile-button bg-white px-md py-sm rounded-lg font-label-code text-label-code text-primary border-b-4 border-surface-container-highest active:translate-y-1 active:border-b-0" onclick="addToken(this, 'A1;A10')">
+                    A1;A10
+                </button>
+</div>
+</section>
+</main>
+<!-- Bottom Action Shell -->
+<footer class="fixed bottom-0 left-0 w-full z-50 bg-surface border-t-2 border-surface-container-highest h-24 px-gutter flex items-center justify-center">
+<div class="w-full max-w-container-max flex justify-between items-center">
+<button class="text-primary font-bold hover:underline px-md py-sm flex items-center gap-xs" onclick="resetFormula()">
+<span class="material-symbols-outlined" data-icon="restart_alt">restart_alt</span>
+                Reiniciar
+            </button>
+<button class="tactile-button primary-tactile bg-primary text-on-primary px-xl py-sm rounded-xl font-bold text-title-md min-w-[200px] flex items-center justify-center gap-sm" id="check-button">
+                Comprobar
+            </button>
+</div>
+</footer>
+<!-- Result Feedback Modal (Hidden by default) -->
+<div class="fixed inset-0 z-[60] bg-on-surface/40 flex items-end justify-center pointer-events-none opacity-0 transition-opacity duration-300" id="feedback-overlay">
+<div class="w-full bg-white rounded-t-3xl p-lg transform translate-y-full transition-transform duration-300 shadow-2xl" id="feedback-card">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row items-center justify-between gap-md">
+<div class="flex items-center gap-md">
+<div class="w-16 h-16 rounded-full flex items-center justify-center bg-error-container text-error" id="feedback-icon-container">
+<span class="material-symbols-outlined text-[40px]" data-icon="error" id="feedback-icon">error</span>
+</div>
+<div>
+<h2 class="text-title-md font-title-md" id="feedback-title">¡Casi lo tienes!</h2>
+<p class="text-on-surface-variant" id="feedback-msg">Revisa bien los separadores del rango.</p>
+</div>
+</div>
+<button class="tactile-button primary-tactile bg-primary text-on-primary px-xl py-sm rounded-xl font-bold text-title-md w-full md:w-auto" onclick="hideFeedback()">
+                    Continuar
+                </button>
+</div>
+</div>
+</div>
+<script>
+        const dropZone = document.getElementById('drop-zone');
+        const feedbackOverlay = document.getElementById('feedback-overlay');
+        const feedbackCard = document.getElementById('feedback-card');
+        const checkButton = document.getElementById('check-button');
+
+        let currentFormula = [];
+
+        function addToken(btn, text) {
+            currentFormula.push(text);
+            renderFormula();
+            btn.style.opacity = '0.5';
+            btn.style.pointerEvents = 'none';
+        }
+
+        function renderFormula() {
+            dropZone.innerHTML = '';
+            currentFormula.forEach((token, index) => {
+                const chip = document.createElement('div');
+                chip.className = 'px-md py-sm bg-white rounded-lg shadow-sm border-b-2 border-primary/20 font-label-code text-label-code text-primary flex items-center gap-xs animate-in slide-in-from-bottom-2 duration-200';
+                chip.innerHTML = `<span>${token}</span>`;
+                dropZone.appendChild(chip);
+            });
+        }
+
+        function resetFormula() {
+            currentFormula = [];
+            renderFormula();
+            document.querySelectorAll('.tactile-button').forEach(btn => {
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
+            });
+        }
+
+        checkButton.addEventListener('click', () => {
+            const result = currentFormula.join('');
+            const correct = "=SUMA(A1:A10)";
+            
+            const overlay = document.getElementById('feedback-overlay');
+            const card = document.getElementById('feedback-card');
+            const iconCont = document.getElementById('feedback-icon-container');
+            const icon = document.getElementById('feedback-icon');
+            const title = document.getElementById('feedback-title');
+            const msg = document.getElementById('feedback-msg');
+
+            if (result === correct) {
+                iconCont.className = 'w-16 h-16 rounded-full flex items-center justify-center bg-green-100 text-green-700';
+                icon.innerText = 'check_circle';
+                title.innerText = '¡Excelente trabajo!';
+                msg.innerText = 'Has dominado la función SUMA con rangos dinámicos.';
+            } else {
+                iconCont.className = 'w-16 h-16 rounded-full flex items-center justify-center bg-error-container text-error';
+                icon.innerText = 'error';
+                title.innerText = 'Inténtalo de nuevo';
+                msg.innerText = 'Asegúrate de usar la función SUMA y el rango correcto con dos puntos.';
+            }
+
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            card.classList.remove('translate-y-full');
+        });
+
+        function hideFeedback() {
+            const overlay = document.getElementById('feedback-overlay');
+            const card = document.getElementById('feedback-card');
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            card.classList.add('translate-y-full');
+            if (currentFormula.join('') !== "=SUMA(A1:A10)") {
+                resetFormula();
+            }
+        }
+    </script>
+</body></html>
